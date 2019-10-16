@@ -1,0 +1,484 @@
+class Application_Impl
+{
+  isA Application;
+  0..1 -- 1 ObserverAppl;
+  0..1 -> 1 Persistence;
+  0..1 -> 1 Maze;
+  0..1 -> 1 Renderer;
+  0..1 -> 1 Record;
+  0..1 -> 1 Replay;
+}
+
+class ObserverAppl
+{
+}
+
+class Persistence_Impl
+{
+  isA Persistence;
+  0..1 -> 1 JsonConverter;
+  1 -> 1 MazeElementLoader;
+}
+
+class JsonConverter
+{
+}
+class Record
+{
+  0..1 -> 1 JsonConverter;
+}
+class Replay
+{
+  0..1 -> 1 JsonConverter;
+}
+class Maze_Impl
+{
+  isA Maze;
+  0..1 -> * Items;
+  0..1 -> * Tiles;
+  0..1 -> * Actors;
+}
+
+class Items
+{
+}
+
+class Tiles
+{
+}
+
+class Actors
+{
+}
+
+class Renderer_Impl
+{
+  isA Renderer;
+  0..1 -> 1 Notice;
+}
+
+class Notice
+{
+}
+
+interface Application
+{
+ /**
+  * Returns the Current Time
+  *
+  * @return Returns an int
+  */
+  int getTime();
+
+  /**
+   * Returns the Current GameState
+   *
+   * @return Returns a GameState
+   */
+   GameState getGameState();
+
+  /**
+   * Call when Chap has won a level
+   */
+   void won();
+
+  /**
+   * Call when Chap has lost a level
+   */
+   void lost();
+
+  /**
+   * Call when Chap is on an information tile
+   *
+   * @param message
+   */
+   void info(String message);
+
+  /**
+   * Passes Current GameState to Persistence to save
+   */
+   void save();
+
+  /**
+   * Passes Direction for Chap's movement to Maze
+   *
+   * @param d
+   */
+   void moveChap(Direction d);
+
+  /**
+   * Creates a GameState for the start of the level Passes GameState to Persistence to save
+   */
+   void quit();
+
+  /**
+   * Gets a GameState from Persistence, sets as current GameState and passes MazeState to Maze.
+   * Loads last full Game
+   */
+   void loadGame();
+
+  /**
+   * Gets a GameState from Persistence, sets as current GameState and passes MazeState to Maze.
+   * Loads last level
+   */
+   void loadLevel();
+
+  /**
+   * Gets level 1 GameState from Persistence, sets as current GameState and passes MazeState to Maze
+   */
+   void newGame();
+
+  /**
+   * Pauses Timer and stops Chap from moving
+   */
+   void pause();
+
+  /**
+   * Starts Timer again
+   */
+   void stopPause();
+
+  /**
+   * Shows rules in a pop-up box, stops timer until box closed
+   */
+   void help();
+}
+
+interface Maze
+{
+
+  /**
+   * Add an observer (Application) to this maze so that it will be notified when events such as win,
+   * lose, stand-on-info occur.
+   *
+   * @param observer
+   *          - the observer (application)
+   */
+   void addObserverAppl(Observer observer);
+
+  /**
+   * Moves Chap one place in the given direction and makes him interact with whatever is on the tile
+   * (e.g pickup key etc.). If the move is invalid (there is a wall) he will not move but will still
+   * attempt to interact with the tile (e.g open door).
+   *
+   * @param dir
+   *          - The direction to move chap in
+   */
+   void moveChap(Direction dir);
+
+  /**
+   * Loads a level from a given MazeState.
+   *
+   * @param mazeState
+   *          - the current state of the maze
+   */
+   void loadState(MazeState mazeState);
+
+  /**
+   * Gets the number of chips still in the maze (that Chap has not picked up)
+   *
+   * @return the number of chips
+   */
+   int getChipsLeft();
+
+  /**
+   * Gets the contents of the maze and metadata about the maze.
+   *
+   * @return a MazeState
+   */
+   MazeState getState();
+
+  /**
+   * Updates the maze
+   */
+  // ***Note: this will not be needed until the enemies are implemented***
+   void update();
+}
+
+interface Persistence
+{
+   GameState load(String fileName);
+
+  /**
+   * Load last level.
+   *
+   * @return GameState for the last level
+   */
+   GameState loadLastLevel();
+
+  /**
+   * Load Last Game.
+   *
+   * @return the game state for the last game
+   */
+   GameState loadLastGame();
+
+  /**
+   * Load the Game for level with levelNumber.
+   *
+   * @param levelNumber to load
+   * @return a game state from the level to load
+   */
+   GameState loadLevel(int levelNumber);
+
+  /**
+   * Saves the Current State of Game then quits.
+   * @param gameState to save
+   */
+   void save(GameState gameState);
+
+  /**
+   * Save the gameState to the file name.
+   * @param gameState to save to disk
+   * @param fileName of the file to save the game state in
+   */
+   void save(GameState gameState, String fileName);
+
+  /**
+   * Get the JSON object for a Game State object.
+   *
+   * @param gameState
+   *          to turn into JSON
+   * @return JSON object for the game state
+   */
+   JsonObject getGameStateJson(GameState gameState);
+
+  /**
+   * Saves which level is last unfinished then quits.
+   * @param levelNumber is the current level
+   */
+   void quit(int levelNumber);
+
+  /**
+   * Loads a new game from level 1.
+   * @return a game state from level 1.
+   */
+   GameState newGame();
+}
+
+interface Renderer
+{
+/**
+   * Sets the board layout to be rendered. A null state disables all rendering.
+   *
+   * @param maze
+   *          the MazeState comprising the board
+   * @return a boolean representing whether the map was successfully rendered
+   */
+   boolean setMaze(MazeState maze);
+
+  /**
+   * Retrieves the current board layout that is being rendered.
+   *
+   * @return a MazeState comprising the currently rendered board.
+   */
+   MazeState getMaze();
+
+  /**
+   * Changes the focus area (displayed region) of the board.
+   *
+   * Until resetFocusArea() is called, this also disables automatic adjustment of it.
+   * The Rectangle comprising the new area must have a width and height of 9.
+   *
+   * @param area
+   *          the new focus region
+   * @return a boolean representing whether the focus region was changed
+   */
+   boolean setFocusArea(Rectangle area);
+
+  /**
+   * Resets the focus area to its default value, enabling automatic adjustment of it.
+   */
+   void resetFocusArea();
+
+  /**
+   * Retrieves the current focus area (displayed region) of the board.
+   *
+   * Should setFocusArea() not be called, this is computed by the last call of
+   * redraw().
+   *
+   * @return the current focus area as a Rectangle.
+   */
+   Rectangle getFocusArea();
+
+  /**
+   * Gets the maximum coordinates of the map to draw, using the current focus area.
+   *
+   * @return a Point with the x and y coordinates
+   */
+   Point getMaxPoint();
+
+  /**
+   * Gets the minimum coordinates of the map to draw, using the current focus area.
+   *
+   * @return a Point with the x and y coordinates
+   */
+   Point getMinPoint();
+
+  /**
+   * Retrieves the cell size as rendered by the last call of redraw(). If
+   * redraw() has not been called, -1 is returned.
+   *
+   * @return the size of tiles drawn as an int.
+   */
+   int getCellSize();
+
+  /**
+   * Returns a HashSet of item and actor Objects rendered by the last call
+   * of redraw().
+   *
+   * If redraw() has not been called, -1 is returned.
+   *
+   * @return all rendered items and actors as an HashMap of Objects.
+   */
+   HashSet getRenderedItems();
+
+  /**
+   * Returns a HashSet of Pointss representing the locations of tiles
+   * rendered by the last call of redraw().
+   *
+   * If redraw() has not been called, -1 is returned.
+   *
+   * @return all rendered tiles as an HashMap of Objects.
+   */
+   HashSet getRenderedTiles();
+
+  /**
+   * Displays a Notice on the board.
+   *
+   * If notice is null, displays nothing.
+   *
+   * @param notice
+   *          the Notice to display.
+   */
+   void setNotice(Notice notice);
+
+  /**
+   * Retrieves the current Notice that is displayed by the board.
+   *
+   * @return the current Notice.
+   */
+   Notice getNotice();
+
+  /**
+   * Hides any displayed Notices.
+   *
+   * @return a boolean indicating whether a Notice was formerly displayed
+   *         or not
+   */
+   boolean hideNotice();
+
+  /**
+   * Redraws the game panel in accord with the specified layout.
+   *
+   * @param g
+   *          the Graphics item to use
+   * @param size
+   *          the size of the canvas to draw upon
+   */
+   void redraw(Graphics g, Dimension size);
+}
+
+
+namespace -;
+
+
+class MazeElementLoader
+{
+  1 -> 1 MazeElementRegistry;
+  }
+
+class MazeElementRegistry
+{
+}
+
+class Application_Impl
+{
+  position 72 135 118 42;
+  position.association Application_Impl__SideBar 96,42 30,0;
+  position.association Application_Impl__ObserverAppl 18,0 55,42;
+  position.association Application_Impl__Persistence 84,42 0,0;
+  position.association Application_Impl__Maze 119,29 0,33;
+  position.association Application_Impl__Renderer 33,42 0,0;
+  position.association Application_Impl__Replay 119,8 0,10;
+}
+
+class ObserverAppl
+{
+  position 50 23 109 42;
+}
+
+class Persistence_Impl
+{
+  position 316 352 123 39;
+  position.association MazeElementLoader__Persistence_Impl 124,11 0,10;
+}
+
+class JsonConverter
+{
+  position 297 458 109 39;
+}
+
+class Maze_Impl
+{
+  position 473 162 109 42;
+  position.association Items__Maze_Impl 110,19 0,9;
+  position.association Maze_Impl__Tiles 19,0 61,39;
+  position.association Actors__Maze_Impl 80,0 0,16;
+  
+    position.association MazeElementRegistry__Maze_Impl 28,39 33,0;
+1 -> 1 MazeElementRegistry;
+}
+
+class Items
+{
+  position 632 168 109 39;
+}
+
+class Tiles
+{
+  position 410 59 109 39;
+}
+
+class Renderer_Impl
+{
+  position 74 353 109 55;
+}
+
+class Notice
+{
+  position 90 475 109 39;
+}
+
+class Actors
+{
+  position 589 81 109 39;
+}
+
+
+namespace -;
+
+
+class MazeElementLoader
+{
+  position 534 400 126 55;
+  }
+
+class MazeElementRegistry
+{
+  position 490 283 133 55;
+}//$?[End_of_model]$?
+
+namespace -;
+
+
+class Record
+{
+  position 50 430 109 45;
+  position.association JsonConverter__Record 110,10 0,10;
+}
+
+class Replay
+{
+  position 250 30 109 45;
+}

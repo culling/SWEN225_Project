@@ -1,0 +1,1 @@
+{"level":1,"timeRemaining":0,"totalTime":0,"mazeState":{"width":0,"height":0,"numChips":0,"board":{"tileset":{},"board":{}},"chap":{"name":"Chap","location":{"x":1.0,"y":1.0},"direction":"EAST","fields":{"chipsCollected":"0","chipsCollected.class":"java.lang.Integer"}},"inventory":[],"items":[],"enemies":[]}}

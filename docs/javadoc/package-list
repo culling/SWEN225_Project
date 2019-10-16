@@ -1,0 +1,16 @@
+nz.ac.vuw.ecs.swen225.a3.application
+nz.ac.vuw.ecs.swen225.a3.common
+nz.ac.vuw.ecs.swen225.a3.maze
+nz.ac.vuw.ecs.swen225.a3.maze.actors
+nz.ac.vuw.ecs.swen225.a3.maze.items
+nz.ac.vuw.ecs.swen225.a3.maze.tiles
+nz.ac.vuw.ecs.swen225.a3.persistence
+nz.ac.vuw.ecs.swen225.a3.persistence.jsonConverter
+nz.ac.vuw.ecs.swen225.a3.plugin
+nz.ac.vuw.ecs.swen225.a3.recnplay
+nz.ac.vuw.ecs.swen225.a3.render
+nz.ac.vuw.ecs.swen225.a3.tests.application
+nz.ac.vuw.ecs.swen225.a3.tests.maze
+nz.ac.vuw.ecs.swen225.a3.tests.persistence
+nz.ac.vuw.ecs.swen225.a3.tests.plugins
+nz.ac.vuw.ecs.swen225.a3.tests.render

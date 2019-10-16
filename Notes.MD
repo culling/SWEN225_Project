@@ -1,0 +1,1 @@
+When editing json files in VSCode on ubuntu, use Ctrl + Shift + I to indent nicely and make editing easier

@@ -1,0 +1,264 @@
+{
+    "level": 2,
+    "timeRemaining": 100,
+    "totalTime": 100,
+    "mazeState": {
+        "width": 8,
+        "height": 8,
+        "numChips": 5,
+        "board": {
+            "tileset": {
+                "Wall": {
+                    "name": "Wall",
+                    "fields": {}
+                },
+                "LockedDoor1": {
+                    "name": "LockedDoor",
+                    "fields": {
+                        "isOpen": "false",
+                        "isOpen.class": "java.lang.Boolean",
+                        "id": "1",
+                        "id.class": "java.lang.Integer"
+                    }
+                },
+                "LockedDoor2": {
+                    "name": "LockedDoor",
+                    "fields": {
+                        "isOpen": "false",
+                        "isOpen.class": "java.lang.Boolean",
+                        "id": "2",
+                        "id.class": "java.lang.Integer"
+                    }
+                },
+                "LockedDoor3": {
+                    "name": "LockedDoor",
+                    "fields": {
+                        "isOpen": "false",
+                        "isOpen.class": "java.lang.Boolean",
+                        "id": "3",
+                        "id.class": "java.lang.Integer"
+                    }
+                },
+                "ExitDoor": {
+                    "name": "ExitDoor",
+                    "fields": {
+                        "isOpen": "false",
+                        "isOpen.class": "java.lang.Boolean",
+                        "numChipsNeeded": "1",
+                        "numChipsNeeded.class": "java.lang.Integer"
+                    }
+                },
+                "Free": {
+                    "name": "Free",
+                    "fields": {}
+                }
+            },
+            "board": {
+                "row 0": [
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall"
+                ],
+                "row 1": [
+                    "Wall",
+                    "Free",
+                    "LockedDoor1",
+                    "Free",
+                    "Free",
+                    "Free",
+                    "Free",
+                    "Wall"
+                ],
+                "row 2": [
+                    "Wall",
+                    "Free",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall"
+                ],
+                "row 3": [
+                    "Wall",
+                    "Free",
+                    "LockedDoor2",
+                    "Free",
+                    "Free",
+                    "Free",
+                    "Free",
+                    "Wall"
+                ],
+                "row 4": [
+                    "Wall",
+                    "Free",
+                    "Wall",
+                    "Free",
+                    "Free",
+                    "Free",
+                    "Free",
+                    "Wall"
+                ],
+                "row 5": [
+                    "Wall",
+                    "Free",
+                    "Wall",
+                    "LockedDoor3",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall"
+                ],
+                "row 6": [
+                    "Wall",
+                    "Free",
+                    "Wall",
+                    "Free",
+                    "Free",
+                    "ExitDoor",
+                    "Free",
+                    "Wall"
+                ],
+                "row 7": [
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall",
+                    "Wall"
+                ]
+            }
+        },
+        "chap": {
+            "name": "Chap",
+            "location": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "direction": "NORTH",
+            "fields": {
+                "chipsCollected": "0",
+                "chipsCollected.class": "java.lang.Integer"
+            }
+        },
+        "inventory": [
+            {
+                "name": "Key",
+                "location": "null",
+                "fields": {
+                    "id": "0",
+                    "id.class": "java.lang.Integer"
+                }
+            }
+        ],
+        "enemies": [
+            {
+                "name": "Bug",
+                "location": {
+                    "x": 6.0,
+                    "y": 4.0
+                },
+                "direction": "EAST",
+                "fields": {}
+            },
+            {
+                "name": "Snake",
+                "location": {
+                    "x": 6.0,
+                    "y": 3.0
+                },
+                "direction": "EAST",
+                "fields": {}
+            }
+
+        ],
+        "items": [
+            {
+                "name": "Chip",
+                "location": {
+                    "x": 6.0,
+                    "y": 1.0
+                },
+                "fields": {}
+            },
+            {
+                "name": "Info",
+                "location":{
+                    "x": 1.0,
+                    "y": 6.0
+                },
+                "fields": {
+                    "text": "Use the hammer to destroy the crate!",
+                    "text.class": "java.lang.String"
+                }
+            },
+            {
+                "name": "ChipCrate",
+                "location": {
+                    "x": 4.0,
+                    "y": 1.0
+                },
+                "fields": {}
+            },
+            {
+                "name": "Hammer",
+                "location": {
+                    "x": 1.0,
+                    "y": 3.0
+                },
+                "fields": {}
+            },
+            {
+                "name": "Exit",
+                "location": {
+                    "x": 6.0,
+                    "y": 6.0
+                },
+                "fields": {
+                    "numChipsNeeded": "1",
+                    "numChipsNeeded.class": "java.lang.Integer"
+                }
+            },
+            {
+                "name": "Key",
+                "location": {
+                    "x": 1.0,
+                    "y": 2.0
+                },
+                "fields": {
+                    "id": "1",
+                    "id.class": "java.lang.Integer"
+                }
+            },
+            {
+                "name": "Key",
+                "location": {
+                    "x": 5.0,
+                    "y": 1.0
+                },
+                "fields": {
+                    "id": "2",
+                    "id.class": "java.lang.Integer"
+                }
+            },
+            {
+                "name": "Key",
+                "location": {
+                    "x": 4.0,
+                    "y": 4.0
+                },
+                "fields": {
+                    "id": "3",
+                    "id.class": "java.lang.Integer"
+                }
+            }
+        ]
+    }
+}
